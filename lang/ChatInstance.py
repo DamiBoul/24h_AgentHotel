@@ -34,16 +34,3 @@ class ChatInstance:
         result = self.chain.invoke(prompt, config={"callbacks": [self.langfuse_handler]})
         return result
 
-
-
-
-
-
-
-
-
-
-
-
-
-
