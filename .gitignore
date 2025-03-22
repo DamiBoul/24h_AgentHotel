@@ -178,3 +178,6 @@ cython_debug/
 
 #intelliJ
 .idea
+
+#tokens
+utils/Constants.py
