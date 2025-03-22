@@ -1,7 +1,7 @@
 import httpx
 import logging
 
-from model import ClientModel
+from model import *
 
 class ClientAPI:
     def __init__(self):
@@ -11,7 +11,7 @@ class ClientAPI:
     def getClients(self):
         return httpx.get(self.url, headers=self.headers).json()
 
-    async def postClient(self, data: ClientModel.ClientModel):
+    async def postClient(self, data: Models.ClientModel):
         client_data = {
             "name": "toto",
             "phone_number": "0606060606",

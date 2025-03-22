@@ -6,3 +6,6 @@ class ClientModel(BaseModel):
     phone_number: str
     room_number: str
     special_requests: str
+
+class MessageModel(BaseModel):
+    message: str
