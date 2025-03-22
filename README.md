@@ -1,4 +1,4 @@
 # 24h_AgentHotel
 Agent IA pour le sujet Hotel California des 24h du code.
 
-On vas gagner car on est les plus forts!
+On vas gagner car on est les plus forts !
