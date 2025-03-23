@@ -99,13 +99,22 @@ async def postMessage(message: Models.MessageModel):
             emo = "NORMAL"
             ans = out.content
         else:
-            emo = out.tool_calls[0]['name']
+            temp = out.tool_calls[0]
+            emo = temp['name']
             print(emo)
-            ans = out.tool_calls[0]["args"]['answer']
+            temp = temp["args"]
+            ans = temp['answer']
             print(ans)
             if not emo in ["CUISINE", "SPA", "TOURISME", "CRY"]:
-                emo = "NORMAL"
+                if emo.startwith("post") :
+                    if emo == "posthotel":
+                        ClientAPI.ClientAPI().reserverClient(temp["name"],temp["phone_number"],temp["room_number"],temp["special_requests"])
+                    else:
+                        #await RestaurantAPI.RestaurantAPI.postReservation(temp,temp,temp,temp,temp)
+                        pass
                 
+                    
+                emo = "NORMAL"
     except:
         ans = 'error'
         emo = "DEAD"
