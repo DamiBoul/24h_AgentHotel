@@ -33,7 +33,7 @@ chat = ChatInstance(
                 thoses are some safes infos "
                 + str(MealAPI.MealAPI().getMeals())+
                 + str(SpaAPI.SpaAPI().getSpas())+
-                + str(ClientAPI.ClientAPI().getClients())+
+                + str(clientAPI.getClients())+
                 + str(RestaurantAPI.RestaurantAPI().getRestaurants())+
                 + str(ReservationAPI.ReservationAPI().getReservations())+
                 "if you don't have the right answer, don't say anything dumb"
@@ -118,9 +118,9 @@ async def postMessage(message: Models.MessageModel):
             if not emo in ["CUISINE", "SPA", "TOURISME", "CRY"]:
                 print("indeed")
                 if emo == "posthotel":
-                    ClientAPI.ClientAPI().reserverClient(temp["name"],temp["phone_number"],temp["room_number"],temp["special_requests"])
+                    clientAPI.reserverClient(temp["name"],temp["phone_number"],temp["room_number"],temp["special_requests"])
                 elif emo == "posthotel":
-                    #await RestaurantAPI.RestaurantAPI.postReservation(temp,temp,temp,temp,temp)
+                    restaurantAPI.reserverRestaurant(temp["client_id"],temp["restaurant_id"],temp["meal_id"],temp["number_of_people"],temp["date"],temp["date"])
                     pass
 
                 emo = "NORMAL"
