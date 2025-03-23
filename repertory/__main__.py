@@ -5,8 +5,8 @@ from starlette.middleware.cors import CORSMiddleware
 from distant import *
 from model import Models
 from lang.ChatInstance import ChatInstance
-import lang.emotiontoolcall 
-
+import lang.emotiontoolcall
+from private import *
 
 app = FastAPI()
 
@@ -29,6 +29,8 @@ chat = ChatInstance(
         lang.emotiontoolcall.STATE
     )
 
+base_url = api_base_url()
+headers = {"Authorization": token_api()}
 
 # origines que vous souhaitez autoriser
 origins = [
@@ -46,6 +48,36 @@ app.add_middleware(
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
+
+@app.post("/reservation/")
+async def postReservation(reservation: Models.RestaurantReservationModel):
+    reservation_data = {
+        "meal": reservation.mealId,
+        "restaurant": reservation.restaurantId,
+        "client": reservation.clientId,
+        "number_of_guests": reservation.number_of_guest,
+        "date": reservation.date,
+        "special_requests": reservation.special_requests
+    }
+    async with httpx.AsyncClient() as client:
+        response = await client.post(base_url+"/reservations/", json=reservation_data, headers=headers)
+    if response.status_code != 201:
+        raise Exception(response.text)
+    return {"message": "Réservation crée avec succès", "reservation": reservation_data, "response": response.content}
+
+@app.post("/client/")
+async def postClient(client: Models.ClientModel):
+    client_data = {
+        "name": client.name,
+        "phone_number": client.phone_number,
+        "room_number": client.room_number,
+        "special_requests": client.special_requests
+    }
+    async with httpx.AsyncClient() as client:
+        response = await client.post(base_url+"/clients/", json=client_data, headers=headers)
+    if response.status_code != 201:
+        raise Exception(response.text)
+    return {"message": "Client crée avec succès", "client": client_data, "response": response.content}
 
 
 @app.post("/message/")
