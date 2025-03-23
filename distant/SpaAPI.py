@@ -1,9 +1,11 @@
 import requests
+from private import *
 
 
 class SpaAPI:
     def __init__(self):
-        self.url = "https://app-584240518682.europe-west9.run.app/api/spas/"
+        self.url = api_base_url()+"/spas/"
+        self.headers = {"Authorization": token_api()}
 
     def getSpas(self):
-        return requests.get(self.url, headers={"Authorization": "Token bvmgSMAjLpqk6PAyWJ86s62sxdXlbWlC"}).json()
+        return requests.get(self.url, headers=self.headers).json()
