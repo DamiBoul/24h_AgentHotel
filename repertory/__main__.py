@@ -6,6 +6,7 @@ from distant import *
 from model import Models
 from lang.ChatInstance import ChatInstance
 import lang.emotiontoolcall 
+import lang.posttoolcall
 
 
 app = FastAPI()
@@ -27,7 +28,7 @@ chat = ChatInstance(
             ),
             ("human", "{input}"),
         ],
-        lang.emotiontoolcall.STATE
+        lang.emotiontoolcall.endpoint + lang.posttoolcall.datarequest
     )
 
 
@@ -97,6 +98,8 @@ async def postMessage(message: Models.MessageModel):
             print(emo)
             ans = out.tool_calls[0]["args"]['answer']
             print(ans)
+            if not emo in ["CUISINE", "SPA", "TOURISME", "CRY"]:
+                emo = "NORMAL"
     except:
         ans = 'error'
         emo = "DEAD"
