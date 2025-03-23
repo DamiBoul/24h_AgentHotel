@@ -27,7 +27,7 @@ chat = ChatInstance(
             ),
             ("human", "{input}"),
         ],
-        lang.emotiontoolcall.STATE
+        lang.emotiontoolcall.endpoint
     )
 
 base_url = api_base_url()
