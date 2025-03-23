@@ -3,6 +3,10 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
 from distant import *
+from distant import MealAPI
+from distant import SpaAPI
+from distant import ReservationAPI
+import lang.gettoolcall
 from model import Models
 from lang.ChatInstance import ChatInstance
 import lang.emotiontoolcall 
@@ -26,7 +30,13 @@ chat = ChatInstance(
                 these are all the last messages {old_messages}, \
                 you also need to ouput an image from theses STATE = [CUISINE, SPA, TOURISME, CRY] \
                 they are essentials tho you need to chose one and use the right one \
-                if you don't have the right answer, don't say anything dumb"
+                thoses are some safes infos "
+                + str(MealAPI.MealAPI().getMeals())+
+                + str(SpaAPI.SpaAPI().getSpas())+
+                + str(ClientAPI.ClientAPI().getClients())+
+                + str(RestaurantAPI.RestaurantAPI().getRestaurants())+
+                + str(ReservationAPI.ReservationAPI().getReservations())+
+                "if you don't have the right answer, don't say anything dumb"
             ),
             ("human", "{input}"),
         ],
@@ -101,19 +111,18 @@ async def postMessage(message: Models.MessageModel):
         else:
             temp = out.tool_calls[0]
             emo = temp['name']
-            print(emo)
+            print("emo : ",emo)
             temp = temp["args"]
             ans = temp['answer']
             print(ans)
             if not emo in ["CUISINE", "SPA", "TOURISME", "CRY"]:
-                if emo.startwith("post") :
-                    if emo == "posthotel":
-                        ClientAPI.ClientAPI().reserverClient(temp["name"],temp["phone_number"],temp["room_number"],temp["special_requests"])
-                    else:
-                        #await RestaurantAPI.RestaurantAPI.postReservation(temp,temp,temp,temp,temp)
-                        pass
-                
-                    
+                print("indeed")
+                if emo == "posthotel":
+                    ClientAPI.ClientAPI().reserverClient(temp["name"],temp["phone_number"],temp["room_number"],temp["special_requests"])
+                elif emo == "posthotel":
+                    #await RestaurantAPI.RestaurantAPI.postReservation(temp,temp,temp,temp,temp)
+                    pass
+
                 emo = "NORMAL"
     except:
         ans = 'error'

@@ -1,34 +1,28 @@
 from typing_extensions import Annotated, TypedDict
 
-class getspa(TypedDict):
+class getSpas(TypedDict):
     """if the client wants to know something about the spas  
     """
-    name: Annotated[str, ..., "the name of the client"]
-    phone_number: Annotated[str, ..., "the phone numbre of the client"]
-    room_number: Annotated[str, ..., "the room the client wants"]
-    special_requests: Annotated[str, ..., "any special request from the client"]
-    answer: Annotated[str, ..., "confirm the request to the client"]
+    answer: Annotated[str, ..., "the answer to the client"]
 
-class gethotel(TypedDict):
-    """if the client wants to know something about the hotel  
+class getClient(TypedDict):
+    """if the client wants to know something about the hotel reservations
     """
-    name: Annotated[str, ..., "the name of the client"]
-    phone_number: Annotated[str, ..., "the phone numbre of the client"]
-    room_number: Annotated[str, ..., "the room the client wants"]
-    special_requests: Annotated[str, ..., "any special request from the client"]
-    answer: Annotated[str, ..., "confirm the request to the client"]
+    answer: Annotated[str, ..., "the answer to the client"]
 
-class getrestaurant(TypedDict):
+class getrestaurants(TypedDict):
     """if the client wants to know something about the restaurant
     """
-    restaurant_id: Annotated[str, ..., "the id of a restaurant"]
-    client_id: Annotated[str, ..., "the id of a client"]
-    date: Annotated[str, ..., "the date of the reservation"]
-    meal_id: Annotated[str, ..., "any special request from the client"]
-    number_of_people: Annotated[str, ..., "any special request from the client"]
-    special_requests: Annotated[str, ..., "any special request from the client"]
-    answer: Annotated[str, ..., "confirm the request to the client"]
+    answer: Annotated[str, ..., "the answer to the client"]
 
+class getMeals(TypedDict):
+    """if the client wants to know something about the meals served
+    """
+    answer: Annotated[str, ..., "the answer to the client"]
 
+class getReservations(TypedDict):
+    """if the client wants to know something about the restaurants reservations
+    """
+    answer:  Annotated[str, ..., "the answer to the client"]
 
-datarequest = [gethotel, getrestaurant, getspa]
+datasend = [getClient, getrestaurants, getSpas, getMeals, getReservations]

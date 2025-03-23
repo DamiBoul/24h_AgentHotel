@@ -17,7 +17,7 @@ class postrestaurant(TypedDict):
     restaurant_id: Annotated[str, ..., "the id of a restaurant"]
     client_id: Annotated[str, ..., "the id of a client"]
     date: Annotated[str, ..., "the date of the reservation"]
-    meal_id: Annotated[str, ..., "any special request from the client"]
+    meal_id: Annotated[str, ..., "meal id, pull a getmeal and to ask the user what meal he wants"] 
     number_of_people: Annotated[str, ..., "any special request from the client"]
     special_requests: Annotated[str, ..., "any special request from the client"]
     answer: Annotated[str, ..., "confirm the request to the client"]
