@@ -21,8 +21,6 @@ class ChatInstance:
 
         self.change_template(template, tools)
         
-        
-        
         self.history = []  
 
 
