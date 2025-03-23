@@ -6,7 +6,7 @@ from private import *
 
 class ReservationAPI:
     def __init__(self):
-        self.url = api_base_url()+"/reservations/"
+        self.url = api_base_url() + "/reservations/"
         self.headers = {"Authorization": token_api()}
 
     def getReservations(self):
@@ -26,3 +26,13 @@ class ReservationAPI:
         if response.status_code != 201:
             raise Exception(response.text)
         return {"message": "Réservation crée avec succès", "reservation": reservation_data}
+
+    def reserverRestaurant(self, clientId, restaurantId, mealId, number_of_guests, date, special_requests):
+        modelReservation = Models.RestaurantReservationModel()
+        modelReservation.clientId = clientId
+        modelReservation.restaurantId = restaurantId
+        modelReservation.mealId = mealId
+        modelReservation.number_of_guest = number_of_guests
+        modelReservation.date = date
+        modelReservation.special_requests = special_requests
+        return self.postReservation(modelReservation)

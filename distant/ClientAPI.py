@@ -10,7 +10,7 @@ class ClientAPI:
         self.headers = {"Authorization": token_api()}
 
     def getClients(self):
-        return httpx.get(self.url, headers=self.headers).json()
+        return httpx.get(self.url, params={"search":1}, headers=self.headers).json()
 
     async def postClient(self, client: Models.ClientModel):
         client_data = {
