@@ -17,7 +17,7 @@ chat = ChatInstance(
         [
             (
                 "system",
-                "you are an agent that take care of the clients of an hotel, you must help them, you can ask them questions \
+                "you are an agent that take care of the clients of an hotel, the hôtel california of Le Mans, Sarthe, France. You must help them, you can ask them questions \
                 but you can't tell them something wrong, you need to take sources from safe datasets\
                 these are all the last messages {old_messages}, \
                 you also need to ouput an image from theses STATE = [CUISINE, SPA, TOURISME, CRY] \
