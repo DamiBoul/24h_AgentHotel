@@ -6,7 +6,6 @@ from distant import *
 from distant import MealAPI
 from distant import SpaAPI
 from distant import ReservationAPI
-import lang.gettoolcall
 from model import Models
 from lang.ChatInstance import ChatInstance
 import lang.emotiontoolcall 
@@ -19,6 +18,10 @@ app = FastAPI()
 restaurantAPI = RestaurantAPI.RestaurantAPI()
 clientAPI = ClientAPI.ClientAPI()
 
+data = str(MealAPI.MealAPI().getMeals()) + str(SpaAPI.SpaAPI().getSpas()) + str(clientAPI.getClients()) + str(RestaurantAPI.RestaurantAPI().getRestaurants()) + str(ReservationAPI.ReservationAPI().getReservations())
+text = data.replace("{", "")
+text = text.replace("}", "")
+
 chat = ChatInstance(
         [
             (
@@ -30,12 +33,8 @@ chat = ChatInstance(
                 these are all the last messages {old_messages}, \
                 you also need to ouput an image from theses STATE = [CUISINE, SPA, TOURISME, CRY] \
                 they are essentials tho you need to chose one and use the right one \
-                thoses are some safes infos "
-                + str(MealAPI.MealAPI().getMeals())+
-                + str(SpaAPI.SpaAPI().getSpas())+
-                + str(clientAPI.getClients())+
-                + str(RestaurantAPI.RestaurantAPI().getRestaurants())+
-                + str(ReservationAPI.ReservationAPI().getReservations())+
+                thoses are some safes infos :"
+                +text +
                 "if you don't have the right answer, don't say anything dumb"
             ),
             ("human", "{input}"),
