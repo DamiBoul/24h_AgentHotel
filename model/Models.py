@@ -7,5 +7,14 @@ class ClientModel(BaseModel):
     room_number: str
     special_requests: str
 
+
 class MessageModel(BaseModel):
     message: str
+
+class RestaurantReservationModel(BaseModel):
+    clientId: int
+    restaurantId: int
+    mealId: int
+    date: str
+    special_requests: str
+    number_of_guest: int

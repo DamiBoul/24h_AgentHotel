@@ -8,6 +8,7 @@ from lang.ChatInstance import ChatInstance
 import lang.emotiontoolcall 
 import lang.posttoolcall
 
+from private import *
 
 app = FastAPI()
 
@@ -31,6 +32,8 @@ chat = ChatInstance(
         lang.emotiontoolcall.endpoint + lang.posttoolcall.datarequest
     )
 
+base_url = api_base_url()
+headers = {"Authorization": token_api()}
 
 # origines que vous souhaitez autoriser
 origins = [
@@ -49,20 +52,21 @@ app.add_middleware(
 async def root():
     return {"message": "Hello World"}
 
-
-url = "https://app-584240518682.europe-west9.run.app/api/clients/"
-headers = {"Authorization": "Token bvmgSMAjLpqk6PAyWJ86s62sxdXlbWlC"}
-
-
-@app.get("/restaurants/")
-async def getRestaurants():
-    return restaurantAPI.getRestaurants()
-
-
-@app.get("/clients/")
-async def getClients():
-    return clientAPI.getClients()
-
+@app.post("/reservation/")
+async def postReservation(reservation: Models.RestaurantReservationModel):
+    reservation_data = {
+        "meal": reservation.mealId,
+        "restaurant": reservation.restaurantId,
+        "client": reservation.clientId,
+        "number_of_guests": reservation.number_of_guest,
+        "date": reservation.date,
+        "special_requests": reservation.special_requests
+    }
+    async with httpx.AsyncClient() as client:
+        response = await client.post(base_url+"/reservations/", json=reservation_data, headers=headers)
+    if response.status_code != 201:
+        raise Exception(response.text)
+    return {"message": "Réservation crée avec succès", "reservation": reservation_data, "response": response.content}
 
 @app.post("/client/")
 async def postClient(client: Models.ClientModel):
@@ -73,10 +77,10 @@ async def postClient(client: Models.ClientModel):
         "special_requests": client.special_requests
     }
     async with httpx.AsyncClient() as client:
-        response = await client.post(url, json=client_data, headers=headers)
+        response = await client.post(base_url+"/clients/", json=client_data, headers=headers)
     if response.status_code != 201:
         raise Exception(response.text)
-    return {"message": "Client crée avec succès", "client": client_data}
+    return {"message": "Client crée avec succès", "client": client_data, "response": response.content}
 
 
 @app.post("/message/")
