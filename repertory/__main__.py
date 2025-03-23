@@ -100,6 +100,7 @@ async def postMessage(message: Models.MessageModel):
             print(ans)
             if not emo in ["CUISINE", "SPA", "TOURISME", "CRY"]:
                 emo = "NORMAL"
+                
     except:
         ans = 'error'
         emo = "DEAD"
