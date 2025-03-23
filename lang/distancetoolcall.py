@@ -7,7 +7,7 @@ class SPA(TypedDict):
     answer : Annotated[str, ..., "answer you would give"]
     
 class CRY(TypedDict):
-    """to use absolutely if you don't have any data, it's the best choice if you don't have anything labeled data
+    """to use absolutely if you don't have any data, it's the best choice if you don't have anything labeled data or if you don't understand the message
     """
     answer : Annotated[str, ..., "answer you would give"]
 
