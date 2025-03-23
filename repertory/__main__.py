@@ -11,10 +11,9 @@ restaurantAPI = RestaurantAPI.RestaurantAPI()
 clientAPI = ClientAPI.ClientAPI()
 
 
-# Remplacez par les origines que vous souhaitez autoriser
+# origines que vous souhaitez autoriser
 origins = [
-    "http://localhost:4200",  # Par exemple, l'URL de votre application Angular
-    # Ajoutez d'autres origines si nécessaire
+    "http://localhost:4200",  # l'URL de l'application Angular
 ]
 
 app.add_middleware(
@@ -45,12 +44,12 @@ async def getClients():
 
 
 @app.post("/client/")
-async def postClient():
+async def postClient(client: Models.ClientModel):
     client_data = {
-        "name": "toto",
-        "phone_number": "0606060606",
-        "room_number": "21",
-        "special_requests": "none"
+        "name": client.name,
+        "phone_number": client.phone_number,
+        "room_number": client.room_number,
+        "special_requests": client.special_requests
     }
     async with httpx.AsyncClient() as client:
         response = await client.post(url, json=client_data, headers=headers)
@@ -62,3 +61,4 @@ async def postClient():
 @app.post("/message/")
 async def postMessage(message: Models.MessageModel):
     print(message)
+    return {"message": "Message envoyé avec succès", "reponse": "Bonjour je suis Epp qui répond à la question !", "emotion": "TOURISME"}
